@@ -1,0 +1,17 @@
+{
+  "name": "me/hospital_appointments",
+  "autoload": {
+    "psr-4": {
+      "HospitalAppointments\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Abdullah",
+      "email": "A21alharbi9@gmail.com"
+    }
+  ],
+  "require": {
+    "vlucas/phpdotenv": "^5.5"
+  }
+}
