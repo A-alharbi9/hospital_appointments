@@ -1,3 +1,10 @@
+<?php
+
+if (!isset($_SESSION)) {
+    session_start();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +16,15 @@
 </head>
 
 <body>
+
+    <h1>Home</h1>
+    <?php
+    if (isset($_SESSION['fullName'])) {
+        echo "<h1>Welcome, " . $_SESSION['fullName'] . "</h1>";
+    } else {
+        echo "<h1>Sign in to view this page!</h1>";
+    }
+    ?>
 
 </body>
 

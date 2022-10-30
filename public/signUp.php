@@ -1,3 +1,9 @@
+<?php
+if (!isset($_SESSION)) {
+
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +15,15 @@
 </head>
 
 <body>
-    <form action="" method="post">
+    <form action="../src/auth/signup.php" method="post">
+
+        <label for="role">Are you a</label>
+
+        <select name="role">
+            <option value="patient">patient</option>
+            <option value="doctor">doctor</option>
+        </select>
+
         <label for="fullName"> Full name: </label>
         <input type="text" name="fullName" placeholder="Your full name" />
         <label for="email"> Email: </label>

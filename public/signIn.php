@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <form action="" method="post">
+    <form action="../src/auth/signin.php" method="post">
 
         <label for="email"> Email: </label>
         <input type="email" name="email" placeholder="Your email" />
