@@ -8,7 +8,7 @@ if (!isset($_SESSION)) {
 if (isset($_POST['signinBtn'])) {
     $email = trim($_POST['email']);
     $password = trim($_POST['password']);
-    // $role = trim($_POST['role']);
+    $role = trim($_POST['role']);
 
     require_once "../../src/config/Db.php";
     require_once "../../src/auth/signin.class.php";
@@ -17,9 +17,9 @@ if (isset($_POST['signinBtn'])) {
 
     $db->createConnection();
 
-    // $isPatient = $role === "patient";
+    $isPatient = $role === "patient";
 
-    $currentTable = "patientData";
+    $currentTable = $isPatient ? "patientData" : "doctorData";
 
     if ($db->doesExistInDb($email, $currentTable)) {
         $user = new userSignin($email, $password);

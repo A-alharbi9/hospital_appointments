@@ -25,7 +25,7 @@ class userSignin extends Db
 
             if ($existingUser->rowCount() > 0) {
 
-                header('location:../../public/index.php');
+                header('location:../../public/dashboard.php');
 
                 $row = $existingUser->fetch(PDO::FETCH_ASSOC);
 
@@ -33,8 +33,6 @@ class userSignin extends Db
 
                 return true;
             } else {
-
-                header('location:../../public/signup.php');
 
                 return false;
             }
