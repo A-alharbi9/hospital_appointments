@@ -24,16 +24,21 @@ class userSignin extends Db
             $existingUser->execute(['email' => $this->email]);
 
             if ($existingUser->rowCount() > 0) {
-
-                header('location:../../public/dashboard.php');
-
                 $row = $existingUser->fetch(PDO::FETCH_ASSOC);
 
-                $_SESSION['fullName'] = $row['fullName'];
+                if (password_verify($this->password, $row['password'])) {
 
-                return true;
+                    header('location:../../public/dashboard.php');
+
+
+                    $_SESSION['fullName'] = $row['fullName'];
+
+                    return true;
+                } else {
+
+                    return false;
+                }
             } else {
-
                 return false;
             }
         } catch (PDOException $error) {
