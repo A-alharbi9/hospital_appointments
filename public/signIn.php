@@ -2,6 +2,14 @@
 
 require_once "../src/config/functions.global.php";
 
+
+
+// if (!isset($_SESSION)) {
+
+
+//     header('location:dashboard.php');
+// }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,9 +37,9 @@ require_once "../src/config/functions.global.php";
 
             <input type="hidden" name="role" value="patient" />
             <label for="email"> Email: </label>
-            <input type="email" name="email" placeholder="Your email" />
+            <input type="email" name="email" placeholder="Your email" required />
             <label for="password"> Password: </label>
-            <input type="password" name="password" placeholder="Your password" />
+            <input type="password" name="password" placeholder="Your password" required />
 
             <button type="submit" name="signinBtn">Sign in</button>
 
@@ -43,9 +51,9 @@ require_once "../src/config/functions.global.php";
 
             <input type="hidden" name="role" value="doctor" />
             <label for="email"> Email: </label>
-            <input type="email" name="email" placeholder="Your email" />
+            <input type="email" name="email" placeholder="Your email" required />
             <label for="password"> Password: </label>
-            <input type="password" name="password" placeholder="Your password" />
+            <input type="password" name="password" placeholder="Your password" required />
 
             <button type="submit" name="signinBtn">Sign in</button>
 

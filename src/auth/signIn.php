@@ -26,6 +26,9 @@ if (isset($_POST['signinBtn'])) {
 
         $user->signinUser($currentTable);
     } else {
-        header('location:../../public/signup.php');
+
+        echo "<script>alert('Incorrect email and/or password')</script>";
+
+        echo "<script>location.href='../../public/signin.php'</script>";
     }
 }

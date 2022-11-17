@@ -32,14 +32,12 @@ class userSignin extends Db
 
 
                     $_SESSION['fullName'] = $row['fullName'];
-
-                    return true;
                 } else {
 
-                    return false;
+                    echo "<script>alert('Incorrect email and/or password')</script>";
+
+                    echo "<script>location.href='../../public/signin.php'</script>";
                 }
-            } else {
-                return false;
             }
         } catch (PDOException $error) {
             echo ('Could not sign in user: ' . $error->getMessage());
