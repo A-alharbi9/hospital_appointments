@@ -53,18 +53,44 @@ if (isset($_POST['addAppointBtn'])) {
 
                 <?php
 
-                $fetchData = new Db();
 
-                $data = $fetchData->createConnection()->query("SELECT * FROM departments", PDO::FETCH_ASSOC);
+                if (file_exists(dirname(__File__) . "../../src/cache/dashboard.txt")) {
 
-                if ($data->rowCount() > 0) {
+                    $file = file_get_contents(dirname(__File__) . "../../src/cache/dashboard.txt");
 
-                    foreach ($data as $row) {
+                    $fileReplace = preg_replace("/,/", " ", $file);
 
-                        echo  "<option value=$row[departmentName]>$row[departmentName]</option>";
+                    $splitArray = preg_split("/\s/", trim($fileReplace));
+
+
+                    for ($i = 0; $i < count($splitArray); $i++) {
+
+                        echo  "<option value=$splitArray[$i]>" . $splitArray[$i] . "</option>";
                     }
-                }
+                } else {
 
+                    $fetchData = new Db();
+
+                    $data = $fetchData->createConnection()->query("SELECT * FROM departments", PDO::FETCH_ASSOC);
+
+                    $_SESSION["departments"] = array();
+
+                    if ($data->rowCount() > 0) {
+
+                        foreach ($data as $row) {
+
+                            if (in_array($row['departmentName'], $_SESSION['departments']) == false) {
+
+                                array_push($_SESSION["departments"], $row['departmentName'] . ',');
+                            }
+                            echo  "<option value=$row[departmentName]>$row[departmentName]</option>";
+                        }
+                    }
+
+                    file_put_contents(dirname(__File__) . "../../src/cache/dashboard.txt", $_SESSION["departments"]);
+
+                    unset($_SESSION['departments']);
+                }
                 ?>
             </select>
 
