@@ -5,8 +5,9 @@ class Patient extends Db
 {
 
 
-    public function addAppointment($inputDepartment, $inputDate, $inputHour, $inputMinute)
+    public function addAppointment($departmentId, $inputDate, $inputHour, $inputMinute, $patientId = null)
     {
+
 
 
         $minDate = date("Y-m-d");
@@ -23,7 +24,8 @@ class Patient extends Db
         $currentTime->createFromFormat("Y-m-d H:i:s", $formattedInput);
         $currentTimeDate = (array) $currentTime;
 
-        $id = $_SESSION['id'];
+        $patient_Id = isset($patientId) ? $patientId : $_SESSION['id'];
+
 
         if ($inputDate >= $minDate && $inputDate <= $maxDate) {
             try {
@@ -34,13 +36,15 @@ class Patient extends Db
                 } else {
 
 
+
+
                     $this->createConnection()->exec("CREATE TABLE IF NOT EXISTS departments(
                     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                     departmentName VARCHAR(50) NOT NULL,
                     dateCreated DATETIME NOT NULL DEFAULT UTC_TIMESTAMP()
                 )");
 
-                    $checkDepartments = $this->createConnection()->prepare("SELECT * FROM departments WHERE departmentName =:departmentName");
+                    $checkDepartments = $this->createConnection()->prepare("SELECT id FROM departments WHERE id =:id");
 
                     $addDepartments = $this->createConnection()->prepare("INSERT IGNORE INTO departments(departmentName) VALUES (:departmentName)");
 
@@ -56,7 +60,7 @@ class Patient extends Db
 
                     foreach ($departments as $department) {
 
-                        $checkDepartments->execute(['departmentName' => $department]);
+                        $checkDepartments->execute(['id' => $departmentId]);
 
                         if ($checkDepartments->rowCount() < 1) {
 
@@ -66,43 +70,92 @@ class Patient extends Db
 
 
 
+
                     $this->createConnection()->exec("CREATE TABLE IF NOT EXISTS appointments(
                     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                     appointmentDate DATETIME NOT NULL,
                     department_id INT NOT NULL,
                     patient_id INT NOT NULL,
+                    doctor_id INT NOT NULL DEFAULT 0,
                     dateCreated DATETIME NOT NULL DEFAULT UTC_TIMESTAMP(),
                     CONSTRAINT fk_key_department FOREIGN KEY(department_id) REFERENCES departments(id) ON UPDATE CASCADE,
                     CONSTRAINT fk_key_patient FOREIGN KEY(patient_id) REFERENCES patientdata(id) ON UPDATE CASCADE
                 )");
 
-                    $fetchId = $this->createConnection()->prepare("SELECT * FROM departments WHERE departmentName =:departmentName");
 
-                    $fetchId->execute(['departmentName' => $inputDepartment]);
 
-                    $row = $fetchId->fetch(PDO::FETCH_ASSOC);
-
-                    $checkAppointments = $this->createConnection()->prepare("SELECT * FROM appointments WHERE department_id=:department_id AND appointmentDate = :appointmentDate");
+                    $checkAppointments = $this->createConnection()->prepare("SELECT * FROM appointments WHERE patient_id=:patient_id AND department_id=:department_id AND DATE(appointmentDate) = DATE(:appointmentDate)");
 
                     $checkAppointments->execute([
-                        'department_id' => $row['id'],
+                        'patient_id' => $patient_Id,
+                        'department_id' => $departmentId,
                         'appointmentDate' => $formattedInput
                     ]);
 
 
                     if ($checkAppointments->rowCount() < 1) {
 
-                        $appointment = $this->createConnection()->prepare("INSERT IGNORE INTO appointments(appointmentDate, department_id, patient_id, dateCreated) VALUES (:appointmentDate, :department_id, :patient_id, UTC_TIMESTAMP())");
 
-                        $appointment
-                            ->execute(
-                                [
-                                    'patient_id' => $id,
-                                    'department_id' => $row['id'],
-                                    'appointmentDate' => $formattedInput,
-                                ]
-                            );
-                        echo "<script>alert('Your appointment has been added!')</script>";
+                        $triggerExist =   $this->createConnection()->query("SELECT * FROM INFORMATION_SCHEMA.TRIGGERS WHERE EVENT_OBJECT_TABLE='doctorData' AND TRIGGER_NAME='doc_id_afterUpdate'");
+
+                        if ($triggerExist->rowCount() < 1) {
+
+                            $this->createConnection()->query("CREATE TRIGGER doc_id_afterUpdate AFTER UPDATE ON doctorData FOR EACH ROW 
+                                    BEGIN 
+                                        IF OLD.Id <> NEW.Id THEN 
+                                             UPDATE appointments SET doctor_id = NEW.Id WHERE doctor_id = OLD.Id; 
+                                        END IF;
+                                    END");
+                        }
+
+
+                        if ($_SESSION['table'] === 'doctorData') {
+
+                            $checkDocs = $this->createConnection()->prepare("SELECT * FROM doctorData WHERE id=:id");
+
+                            $checkDocs
+                                ->execute(
+                                    [
+                                        'id' => $_SESSION['id'],
+                                    ]
+                                );
+
+                            if ($checkDocs->rowCount() > 0) {
+
+
+                                $appointment = $this->createConnection()->prepare("INSERT INTO appointments(appointmentDate, department_id, patient_id, doctor_id, dateCreated) VALUES (:appointmentDate, :department_id, :patient_id, :doctor_id, UTC_TIMESTAMP())");
+
+
+
+                                $appointment
+                                    ->execute(
+                                        [
+                                            'doctor_id' => $_SESSION['id'],
+                                            'patient_id' => $patient_Id,
+                                            'department_id' => $departmentId,
+                                            'appointmentDate' => $formattedInput
+                                        ]
+                                    );
+
+                                echo "<script>alert('Your appointment has been added!')</script>";
+                            } else {
+
+                                echo "<script>alert('Your appointment was not added!')</script>";
+                            }
+                        } else {
+                            $appointment = $this->createConnection()->prepare("INSERT IGNORE INTO appointments(appointmentDate, department_id, patient_id, dateCreated) VALUES (:appointmentDate, :department_id, :patient_id, UTC_TIMESTAMP())");
+
+                            $appointment
+                                ->execute(
+                                    [
+                                        'patient_id' => $_SESSION['id'],
+                                        'department_id' => $departmentId,
+                                        'appointmentDate' => $formattedInput
+                                    ]
+                                );
+
+                            echo "<script>alert('Your appointment has been added!')</script>";
+                        }
                     } else {
 
                         echo "<script>alert('Your appointment was not added!')</script>";

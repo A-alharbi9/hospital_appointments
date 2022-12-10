@@ -30,7 +30,8 @@ class Db
                 `Id` INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
                 `fullName` varchar(255),
                 `email` varchar(255),
-                `password` varchar(400)
+                `password` varchar(400),
+                `department_id` INT NOT NULL DEFAULT 0
             )");
 
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

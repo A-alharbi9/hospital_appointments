@@ -6,13 +6,13 @@ $siteData = [
         'home' => 'home',
         'sign up' => 'sign up',
         'sign in' => 'sign in',
-        'dashboard' => 'dashboard'
+        'dashboard' => 'dashboard',
+        'appointments' => 'appointments'
     ),
     'navItems' => array(
         'home' => 'home',
         'sign up' => 'sign up',
-        'sign in' => 'sign in',
-        'dashboard' => 'dashboard'
+        'sign in' => 'sign in'
     ),
 ];
 

@@ -31,7 +31,9 @@ class userSignin extends Db
                     header('location:../../public/dashboard.php');
 
 
+                    $_SESSION['id'] = $row['Id'];
                     $_SESSION['fullName'] = $row['fullName'];
+                    $_SESSION['table'] = $table;
                 } else {
 
                     echo "<script>alert('Incorrect email and/or password')</script>";

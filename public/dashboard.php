@@ -11,19 +11,26 @@ if (!isset($_SESSION)) {
     session_start();
 }
 
-if (isset($_POST['addAppointBtn'])) {
+if (isset($_POST['addDeptBtn'])) {
+    try {
 
-    date_default_timezone_set("UTC");
+        $inputDepartment = $_POST['department'];
 
-    $inputDate = $_POST['inputDate'];
-    $inputHour = $_POST['inputHour'];
-    $inputMinute = $_POST['inputMinute'];
+        $user = new Db();
 
-    $department = $_POST['departmentName'];
+        $addRowKey = $user->createConnection()->prepare("ALTER TABLE doctordata ADD FOREIGN KEY(department_id) REFERENCES departments(id) ON UPDATE CASCADE");
 
-    $patient = new Patient();
+        $addUserDepartment = $user->createConnection()->prepare("UPDATE doctorData SET department_id=:department_id WHERE id=:id");
 
-    $patient->addAppointment($department, $inputDate, $inputHour, $inputMinute);
+        $addUserDepartment->execute([
+            'id' => $_SESSION['id'],
+            'department_id' => $inputDepartment
+        ]);
+    } catch (PDOException $error) {
+
+        die("Could not add user department: " . $error->getMessage());
+        echo "<script>alert('Invalid date!\\nThe current UTC date up to six months is the only valid date.')</script>";
+    }
 }
 
 ?>
@@ -43,70 +50,96 @@ if (isset($_POST['addAppointBtn'])) {
 
     if (isset($_SESSION['fullName'])) {
     ?>
+        <h2><?= $_SESSION['table'] === 'doctorData' ? "Welcome Dr. $_SESSION[fullName]" : "Welcome, $_SESSION[fullName]" ?> </h2>
 
-        <h1><?= "Welcome, $_SESSION[fullName]" ?> </h1>
-        <form method='post'>
+        <?php
 
-            <label for='departmentName'> department: </label>
-            <select name='departmentName' required>
-                <option value=''></option>
+        if ($_SESSION['table'] === 'doctorData') {
 
-                <?php
+        ?>
 
+            <?php
 
-                if (file_exists(dirname(__File__) . "../../src/cache/dashboard.txt")) {
+            $user = new Db();
 
-                    $file = file_get_contents(dirname(__File__) . "../../src/cache/dashboard.txt");
-
-                    $fileReplace = preg_replace("/,/", " ", $file);
-
-                    $splitArray = preg_split("/\s/", trim($fileReplace));
+            $checkDepartment = $user->createConnection()->query("SELECT * FROM doctorData where id=$_SESSION[id] AND department_Id < 1", PDO::FETCH_ASSOC);
 
 
-                    for ($i = 0; $i < count($splitArray); $i++) {
+            if ($checkDepartment->rowCount() > 0) {
 
-                        echo  "<option value=$splitArray[$i]>" . $splitArray[$i] . "</option>";
-                    }
-                } else {
+            ?>
 
-                    $fetchData = new Db();
+                <form method='post'>
 
-                    $data = $fetchData->createConnection()->query("SELECT * FROM departments", PDO::FETCH_ASSOC);
+                    <label for='department'> department: </label>
+                    <select name='department' required>
+                        <option value=''></option>
 
-                    $_SESSION["departments"] = array();
+                        <?php
 
-                    if ($data->rowCount() > 0) {
 
-                        foreach ($data as $row) {
+                        if (file_exists(dirname(__File__) . "../../src/cache/dashboard.txt")) {
 
-                            if (in_array($row['departmentName'], $_SESSION['departments']) == false) {
+                            $file = unserialize(file_get_contents(dirname(__File__) . "../../src/cache/dashboard.txt"));
 
-                                array_push($_SESSION["departments"], $row['departmentName'] . ',');
+                            for ($i = 0; $i < count($file); $i++) {
+
+                                echo  "<option value=" . $file[$i]['department']['id'] . ">" . (string) $file[$i]['department']['name'] . "</option>";
                             }
-                            echo  "<option value=$row[departmentName]>$row[departmentName]</option>";
+                        } else {
+
+                            $fetchData = new Db();
+
+                            $data = $fetchData->createConnection()->query("SELECT * FROM departments", PDO::FETCH_ASSOC);
+
+                            $_SESSION["departments"] = array();
+
+                            if ($data->rowCount() > 0) {
+
+                                $i = 0;
+
+                                foreach ($data as $row) {
+
+                                    if (in_array($row['departmentName'], $_SESSION['departments']) == false) {
+
+                                        $_SESSION["departments"][$i] = [
+                                            "department" => [
+                                                'id' => $row['id'],
+                                                'name' => $row['departmentName']
+                                            ]
+                                        ];
+
+                                        $i++;
+                                    }
+
+                                    echo  "<option value=$row[id]>$row[departmentName]</option>";
+                                }
+                            }
+
+                            file_put_contents(dirname(__File__) . "../../src/cache/dashboard.txt", serialize($_SESSION["departments"]));
                         }
-                    }
+                        ?>
+                    </select>
 
-                    file_put_contents(dirname(__File__) . "../../src/cache/dashboard.txt", $_SESSION["departments"]);
+                    <button type='submit' name='addDeptBtn' class='addDeptBtn'>Add</button>
 
-                    unset($_SESSION['departments']);
-                }
-                ?>
-            </select>
+                </form>
 
-            <label for='inputDate'> choose date: </label>
-            <input type='date' name='inputDate' required />
+            <?php
+            } else {
+            ?>
 
-            <label for='inputHour'> choose time: </label>
-            <input type='number' name='inputHour' min='8' max='13' step='1' placeholder='H' required />
-            <span>:</span>
-            <input type='number' name='inputMinute' min='00' max='59' step='15' placeholder='M' required />
+                <h3>All done :)</h3>
 
-            <button type='submit' name='addAppointBtn' class='addAppointBtn'>Add</button>
+            <?php
+            }
+        } else {
+            ?>
 
-        </form>
+            <h3>Have a nice day!</h3>
 
     <?php
+        }
     } else {
         echo "<h1>Sign in to view this page!</h1>";
     }
