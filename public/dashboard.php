@@ -71,7 +71,7 @@ if (isset($_POST['addDeptBtn'])) {
 
                 <form method='post'>
 
-                    <label for='department'> department: </label>
+                    <label for='department'> Choose your department: </label>
                     <select name='department' required>
                         <option value=''></option>
 
