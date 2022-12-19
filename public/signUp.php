@@ -18,6 +18,9 @@ if (!isset($_SESSION)) {
 </head>
 
 <body>
+
+    <?php include_once("./includes/nav.php") ?>
+
     <form action="../src/auth/signup.php" method="post">
 
         <label for="role">Are you a</label>
@@ -37,6 +40,8 @@ if (!isset($_SESSION)) {
         <input type="password" name="confirmPassword" placeholder="Your confirm password" />
         <button type="submit" name="signupBtn">Sign up</button>
     </form>
+
+    <?php include_once("./includes/footer.php") ?>
 
 </body>
 

@@ -42,6 +42,9 @@ if (isset($_POST['addAppointBtn'])) {
 </head>
 
 <body>
+
+    <?php include_once("./includes/nav.php") ?>
+
     <h1>Appointments</h1>
     <?php
 
@@ -177,6 +180,7 @@ if (isset($_POST['addAppointBtn'])) {
     }
         ?>
 
+        <?php include_once("./includes/footer.php") ?>
 </body>
 
 </html>

@@ -1,0 +1,350 @@
+* {
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+}
+a {
+  text-decoration: none;
+}
+a:hover,
+button:hover {
+  cursor: pointer;
+}
+.btn_secondary {
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 7%;
+  background-color: #fff;
+  padding: 0.3rem 0.5rem;
+  outline-style: none;
+  border-style: none;
+  background-color: #fff;
+}
+.btn_secondary:hover {
+  color: rgb(95, 88, 88);
+}
+.btn_hero_secondary {
+  width: 8rem;
+  height: 2.5rem;
+}
+.btn_hero_secondary:hover {
+  color: rgb(95, 88, 88);
+}
+.btn_main {
+  width: 80px;
+  color: #fff;
+  background-color: rgb(60, 234, 51);
+  padding: 3px 10px;
+  border-width: 1px;
+  border-radius: 8%;
+  outline-style: none;
+  font-size: 15px;
+}
+.hero {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 90vh;
+  overflow: hidden;
+}
+.hero_text {
+  text-align: center;
+  max-width: 90%;
+}
+.hero_btns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hero_btns button {
+  margin: 0.5rem 0rem;
+}
+h1 {
+  color: aquamarine;
+  font-weight: bolder;
+  font-size: 3rem;
+  margin: 1rem 0.5rem;
+}
+h2 {
+  font-size: 1rem;
+  margin: 0.5rem 1rem;
+  padding-bottom: 0.5rem;
+}
+.svg_img_wrapper {
+  display: none;
+}
+.btn_hero_main {
+  width: 8rem;
+  height: 2.5rem;
+  color: #fff;
+  background-color: rgb(60, 234, 51);
+  padding: 0.3rem 0.5rem;
+  border-width: 1px;
+  border-radius: 7%;
+  outline-style: none;
+}
+.service_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  background-color: rgb(255, 247, 247);
+  padding: 4rem 0;
+}
+.services_text {
+  text-align: center;
+  margin: 1rem 0.5rem;
+}
+h3 {
+  font-size: 2rem;
+  margin: 1rem 0;
+}
+h4 {
+  font-size: 1rem;
+  font-weight: lighter;
+}
+.service {
+  box-shadow: 0.3rem 0.2rem 0.5rem 0.2rem gray;
+  background-color: #fff;
+  margin: 1rem 0;
+  padding: 0.7rem 1rem;
+  max-width: 95%;
+}
+.service_main_text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 1rem 0;
+}
+.doctors_wrapper {
+  padding: 2rem 0;
+}
+.img_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 20rem;
+  background-color: rgb(243, 240, 240);
+}
+.circle {
+  width: 100%;
+  height: 22rem;
+}
+.quality_doctors_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+}
+.quality_doctors_main_text {
+  font-weight: bold;
+  font-size: 2rem;
+}
+.quality_doctors_text {
+  color: rgb(180, 178, 178);
+  max-width: 90%;
+  margin: 2rem 0;
+}
+.doctors_text_wrapper {
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 19rem;
+  min-height: 8rem;
+  background-color: rgb(84, 119, 119);
+  border-radius: 10%;
+}
+.doctors_text_wrapper ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.doctors_text_wrapper li {
+  margin: 0.5rem 0;
+}
+.appoint_section_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 40vh;
+  background-color: blueviolet;
+}
+.appoint_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 7rem;
+}
+.appoint_wrapper p {
+  color: #fff;
+  font-size: 2rem;
+}
+.appoint_btn {
+  width: 9rem;
+  height: 2rem;
+  background-color: transparent;
+  border-radius: 5%;
+  margin-top: 1rem;
+  border: 1px solid #fff;
+}
+.appoint_btn a {
+  color: #fff;
+}
+.appoint_btn:hover {
+  background-color: rgb(113, 225, 188);
+  transition-duration: 200ms;
+}
+
+@media screen and (min-width: 768px) {
+  .hero_text {
+    max-width: 55%;
+  }
+  .service {
+    max-width: 80%;
+  }
+  .quality_doctors_text {
+    max-width: 60%;
+  }
+  .img_wrapper {
+    height: 27rem;
+    background-color: #fff;
+  }
+  .circle {
+    width: 70%;
+    height: 25rem;
+  }
+}
+
+@media screen and (min-width: 1080px) {
+  .hero_text {
+    max-width: 30rem;
+    text-align: left;
+    padding: 0 1.5rem;
+    margin: 0 1rem;
+  }
+  h1 {
+    font-size: 4rem;
+  }
+  .hero_btns {
+    display: block;
+  }
+  .hero_btns button {
+    margin: 1rem 1rem;
+  }
+  .svg_img_wrapper {
+    display: inline-flex;
+    width: 35rem;
+    height: 80vh;
+  }
+  .service_wrapper {
+    flex-direction: row;
+    padding: 0 2rem;
+  }
+  .services_text {
+    margin: 0;
+  }
+  .service {
+    box-shadow: 0.5rem 1rem 1rem 0.2rem gray;
+    margin: 1rem 1rem;
+    max-width: 20%;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .hero_text {
+    max-width: 40rem;
+    padding: 0;
+  }
+  h1 {
+    margin: 1rem 1rem;
+  }
+  h2 {
+    color: gray;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+  .hero_btns {
+    width: 100%;
+    margin: 1rem 0.5rem;
+  }
+  .hero_btns button {
+    margin: 0rem 1rem;
+  }
+  .btn_hero_main {
+    width: 8rem;
+    height: 2.5rem;
+    color: #fff;
+    background-color: rgb(60, 234, 51);
+    padding: 0.3rem 0.5rem;
+    border-width: 1px;
+    border-radius: 7%;
+    outline-style: none;
+  }
+  .svg_img_wrapper img {
+    width: 120%;
+    height: 110%;
+    mix-blend-mode: screen;
+  }
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+  .services_text {
+    max-width: 20%;
+    padding: 0 1rem;
+  }
+  .doctors_wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    min-height: 70vh;
+    max-width: 75%;
+    margin: 0 auto;
+  }
+  .doctors_img_wrapper {
+    padding: 0 2.5rem;
+  }
+  .img_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 25rem;
+    height: 22rem;
+    background-color: rgb(243, 240, 240);
+    border-radius: 0 55% 55% 0;
+    box-shadow: 0.5rem 0.3rem 1rem 0.5rem gray;
+  }
+  .circle {
+    width: 23rem;
+    height: 20rem;
+    border-radius: 0 55% 55% 0;
+  }
+  .quality_doctors_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .quality_doctors_main_text {
+    font-weight: bold;
+    font-size: 2rem;
+  }
+  .quality_doctors_text {
+    max-width: 75%;
+    margin: 1.5rem 0;
+  }
+  .doctors_text_wrapper {
+    width: 18rem;
+    height: 8rem;
+    background-color: rgb(84, 119, 119);
+    border-radius: 0 10% 10% 10%;
+  }
+}

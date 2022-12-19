@@ -24,6 +24,8 @@ require_once "../src/config/functions.global.php";
 
 <body>
 
+    <?php include_once("./includes/nav.php") ?>
+
     <div class="selectionContainer" onclick="activeEle(event)">
         <button class="doctorBtn">
             <p>Doctor</p>
@@ -60,38 +62,41 @@ require_once "../src/config/functions.global.php";
         </form>
     </div>
 
-    <script>
-        function activeEle(event) {
-
-            let ele = event.target;
-
-            let eleDoc = document.querySelector('.doctorBtn');
-
-            let eleDocForm = document.querySelector('.doctorForm');
-
-            let elePat = document.querySelector('.patientBtn');
-
-            let elePatForm = document.querySelector('.patientForm');
+    <?php include_once("./includes/footer.php") ?>
 
 
-            if (ele.innerText.toLowerCase() === 'doctor') {
-
-                eleDoc.classList.add("active");
-                eleDocForm.style.display = "block"
-
-                elePat.classList.remove("active");
-                elePatForm.style.display = "none"
-            } else {
-
-                elePat.classList.add("active");
-                elePatForm.style.display = "block"
-
-                eleDoc.classList.remove("active");
-                eleDocForm.style.display = "none"
-            }
-
-        }
-    </script>
 </body>
+<script>
+    function activeEle(event) {
+
+        let ele = event.target;
+
+        let eleDoc = document.querySelector('.doctorBtn');
+
+        let eleDocForm = document.querySelector('.doctorForm');
+
+        let elePat = document.querySelector('.patientBtn');
+
+        let elePatForm = document.querySelector('.patientForm');
+
+
+        if (ele.innerText.toLowerCase() === 'doctor') {
+
+            eleDoc.classList.add("active");
+            eleDocForm.style.display = "block"
+
+            elePat.classList.remove("active");
+            elePatForm.style.display = "none"
+        } else {
+
+            elePat.classList.add("active");
+            elePatForm.style.display = "block"
+
+            eleDoc.classList.remove("active");
+            eleDocForm.style.display = "none"
+        }
+
+    }
+</script>
 
 </html>

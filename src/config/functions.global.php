@@ -25,3 +25,11 @@ function pageTitle($title = 'home')
         echo ucwords($siteData['pageTitle'][strtolower($title)] . ' | ' . $siteData['siteName']);
     }
 }
+function pageNav()
+{
+    global $siteData;
+
+    foreach ($siteData['navItems'] as $key => $value) {
+        return ucwords($siteData['navItems'][$value]);
+    }
+}

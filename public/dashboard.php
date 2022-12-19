@@ -45,6 +45,9 @@ if (isset($_POST['addDeptBtn'])) {
 </head>
 
 <body>
+
+    <?php include_once("./includes/nav.php") ?>
+
     <h1>Dashboard</h1>
     <?php
 
@@ -144,6 +147,8 @@ if (isset($_POST['addDeptBtn'])) {
         echo "<h1>Sign in to view this page!</h1>";
     }
     ?>
+
+    <?php include_once("./includes/footer.php") ?>
 
 </body>
 
