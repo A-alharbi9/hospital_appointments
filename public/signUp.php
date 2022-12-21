@@ -26,7 +26,7 @@ if (!isset($_SESSION)) {
 
         <div class="form_wrapper">
             <div class="form_img_wrapper">
-                <img src="https://images.unsplash.com/photo-1576502200916-3808e07386a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2065&q=80" />
+                <img src="../public/images/signup_image.jpg" alt="signup_image" />
             </div>
 
             <form action="../src/auth/signup.php" method="post">
