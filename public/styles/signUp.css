@@ -17,38 +17,10 @@
   align-items: center;
   width: 100%;
   height: 70%;
-  padding: 1rem 0;
+  /* box-shadow: 0.8rem 0.8rem 0.5rem 0.5rem gray; */
 }
 .form_img_wrapper {
   display: none;
-}
-.doctorForm {
-  display: none;
-}
-.selectionContainer {
-  display: flex;
-  justify-content: center;
-  min-height: 25%;
-}
-.selectionContainer {
-  padding: 1.5rem 0;
-}
-.doctor_btn {
-  width: 5rem;
-  height: 2.5rem;
-  border-radius: 20% 0 0 20%;
-}
-.patient_btn {
-  width: 5rem;
-  height: 2.5rem;
-  border-radius: 0 20% 20% 0;
-}
-.selectionContainer .active {
-  color: #fff;
-  background-color: #000;
-}
-.form_selection_wrapper {
-  height: 90%;
 }
 .form_element {
   display: flex;
@@ -56,13 +28,10 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-}
-.form_element:nth-child(even) {
-  margin: 0.5rem 0;
   padding: 0.5rem 0;
 }
-.form_element:nth-child(odd) {
-  margin-top: 1rem;
+form > .form_element:nth-child(even) {
+  margin: 0.3rem 0;
 }
 .form_element input {
   margin: 0.2rem 0;
@@ -82,12 +51,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 1rem;
   padding: 0.5rem 0;
 }
 .form_button_wrapper button {
   color: #fff;
   width: 70%;
+  margin-top: 0.5rem;
   padding: 0.3rem 0.5rem;
   background-color: rgb(53, 192, 192);
   border: 1px solid gray;
@@ -97,9 +66,6 @@
   background-color: aqua;
 }
 @media screen and (min-width: 1080px) {
-  .selectionContainer {
-    min-height: 20%;
-  }
   .form_wrapper {
     display: flex;
     flex-direction: row;
@@ -117,15 +83,13 @@
     width: 100%;
     height: 100%;
   }
-  .form_element:nth-child(even) {
-    margin: 0.5rem 0.2rem;
+  .form_element {
+    margin: 0 0.2rem;
     padding: 0.5rem 1rem;
   }
-  .form_selection_wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  form > .form_element:nth-child(even) {
+    margin: 0.3rem 0.2rem;
+    padding: 0.5rem 1rem;
   }
 }
 @media screen and (min-width: 1280px) {
@@ -135,6 +99,7 @@
     justify-content: space-around;
     width: 60%;
     height: 80%;
+    box-shadow: 0.8rem 0.8rem 0.5rem 0.5rem gray;
   }
   .form_img_wrapper {
     display: block;
@@ -144,14 +109,5 @@
   .form_img_wrapper img {
     width: 100%;
     height: 100%;
-  }
-  .form_element {
-    margin: 0 0.2rem;
-  }
-  .form_selection_wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
 }
