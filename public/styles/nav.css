@@ -39,6 +39,16 @@ button:hover {
   nav div {
     display: inline-flex;
   }
+  .nav_auth_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 20%;
+  }
+  .nav_auth_wrapper p {
+    margin-right: 0.5rem;
+  }
   .nav_btn_secondary {
     border-style: solid;
     border-width: 1px;
@@ -66,5 +76,15 @@ button:hover {
     color: #fff;
     font-size: 1rem;
     padding: 0.5rem 0.5rem;
+  }
+  .nav_btn_auth_main {
+    padding: 0.3rem 0.5rem;
+    color: #fff;
+    background-color: rgb(60, 234, 51);
+    border-width: 1px;
+    border-radius: 8%;
+  }
+  .nav_btn_auth_main a {
+    color: #fff;
   }
 }

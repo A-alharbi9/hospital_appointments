@@ -1,0 +1,219 @@
+* {
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+}
+.patients_number_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  padding-block: 0.5rem;
+  background-color: black;
+}
+.patients_number_wrapper p {
+  color: #fff;
+  font-size: 1.5rem;
+}
+.patients_number {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 30%;
+  min-height: 20%;
+  font-size: 3rem;
+  padding: 0.3rem 0.3rem;
+  margin-bottom: 1rem;
+  background-color: azure;
+  border-radius: 15%;
+}
+.next_app_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 30vh;
+  font-size: 1.3rem;
+  padding-block: 1rem;
+  color: #fff;
+  background-color: blue;
+}
+.next_app_main {
+  margin-block: 2rem;
+}
+.next_app_date {
+  color: rgb(5, 219, 5);
+  background-color: rgb(255, 253, 253);
+  padding: 0.5rem 1.2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 5%;
+}
+.next_app_date_clear {
+  color: rgb(219, 119, 5);
+  background-color: rgb(255, 253, 253);
+  padding: 0.5rem 1.2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5%;
+}
+.toggle_wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-block: 2rem;
+  background-color: skyblue;
+}
+.toggle_btn_wrapper {
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  min-height: 1.5rem;
+  padding-block: 0.3rem;
+  background-color: gray;
+  border-radius: 3%;
+}
+.toggle_a,
+.toggle_b {
+  width: 45%;
+  padding-block: 0.3rem;
+  border: 1px solid gray;
+  background-color: gray;
+  border-radius: 15%;
+}
+.toggle_a:hover,
+.toggle_b:hover {
+  color: #fff;
+  background-color: #000;
+}
+.search_app_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 65vh;
+  margin-block: 2rem;
+}
+.search_app_wrapper input[type='text'] {
+  width: 70%;
+  padding: 0.3rem 0.5rem;
+  border-radius: 5%;
+  outline: none;
+}
+.app_table_wrapper {
+  margin-block: 3rem;
+}
+.app_table_wrapper thead td {
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: #000;
+  padding-block: 0.3rem;
+}
+.app_table_wrapper tbody td {
+  font-size: 1.2rem;
+  padding-block: 0.3rem;
+}
+.table_data_row:nth-child(odd) {
+  border-bottom: 1px solid;
+}
+.table_data_row:nth-child(even) {
+  color: #fff;
+  background-color: gray;
+  border-bottom: 1px solid;
+}
+.app_table_wrapper thead td,
+.app_table_wrapper tbody td {
+  padding-inline: 1rem;
+}
+.app_table_wrapper tr {
+  text-align: center;
+}
+@media screen and (min-width: 768px) {
+}
+
+@media screen and (min-width: 1080px) {
+  .doctor_dashboard_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .patients_app_wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 80%;
+    min-height: 70vh;
+    padding-block: 1rem;
+  }
+  .patients_number_wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 14.5rem;
+    width: 40%;
+    padding: 1rem 1.5rem;
+    border-radius: 20%;
+  }
+  .patients_number {
+    font-size: 2.5rem;
+    padding: 0.8rem 0.3rem;
+  }
+  .next_app_wrapper {
+    width: 40%;
+    padding: 1rem 1.5rem;
+    border-radius: 20%;
+  }
+  .next_app_main {
+    font-size: 1.5rem;
+    margin-block: 1rem;
+  }
+  .next_app_date {
+    color: rgb(5, 219, 5);
+    background-color: rgb(255, 253, 253);
+    padding: 0.5rem 1.2rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 5%;
+  }
+  .next_app_date_clear {
+    color: rgb(219, 119, 5);
+    background-color: rgb(255, 253, 253);
+    padding: 0.5rem 1.2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5%;
+  }
+  .search_app_wrapper input[type='text'] {
+    width: 15%;
+  }
+  .app_table_wrapper {
+    min-height: 7rem;
+  }
+  .app_table_wrapper thead td {
+    font-size: 1.5rem;
+  }
+  .app_table_wrapper tbody td {
+    font-size: 1rem;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .patients_app_wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 70vh;
+  }
+  .patients_number_wrapper {
+    width: 30%;
+    height: 16rem;
+  }
+  .next_app_wrapper {
+    width: 30%;
+    height: 16rem;
+  }
+}
