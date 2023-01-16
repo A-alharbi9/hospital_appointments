@@ -39,148 +39,170 @@ if (isset($_POST['addAppointBtn'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php pageTitle('appointments') ?></title>
+    <link rel="stylesheet" href="./styles/appointments.css">
 </head>
 
 <body>
 
     <?php include_once("./includes/nav.php") ?>
 
-    <h1>Appointments</h1>
+
     <?php
 
 
     if (isset($_SESSION['fullName'])) {
     ?>
 
-        <h2><?= "Welcome, $_SESSION[fullName]" ?> </h2>
 
-        <h3>Add an appointment:</h1>
+        <div class="section_wrapper">
+            <div class="form_wrapper">
 
-            <form method='post'>
+                <div class="form_img_wrapper">
+                    <img src="./images/appointments_image.jpg" alt="appointments_image" />
+                </div>
 
-                <label for='department'> department: </label>
-                <select name='department' required>
-                    <option value=''></option>
+                <div class="form_selection_wrapper">
 
-                    <?php
+                    <div class="appForm">
 
+                        <form method='post'>
+                            <div class="form_element">
+                                <label for='department'> department: </label>
+                                <select name='department' required>
+                                    <option value=''></option>
 
-                    if (file_exists(dirname(__File__) . "../../src/cache/dashboard.txt")) {
-
-                        $file = unserialize(file_get_contents(dirname(__File__) . "../../src/cache/dashboard.txt"));
-
-                        for ($i = 0; $i < count($file); $i++) {
-
-                            echo  "<option value=" . $file[$i]['department']['id'] . ">" . (string) $file[$i]['department']['name'] . "</option>";
-                        }
-                    } else {
-
-                        $fetchData = new Db();
-
-                        $data = $fetchData->createConnection()->query("SELECT * FROM departments", PDO::FETCH_ASSOC);
-
-                        $_SESSION["departments"] = array();
-
-                        if ($data->rowCount() > 0) {
-
-                            $i = 0;
-
-                            foreach ($data as $row) {
-
-                                if (in_array($row['departmentName'], $_SESSION['departments']) == false) {
-
-                                    $_SESSION["departments"][$i] = [
-                                        "department" => [
-                                            'id' => $row['id'],
-                                            'name' => $row['departmentName']
-                                        ]
-                                    ];
-
-                                    $i++;
-                                }
-
-                                echo  "<option value=$row[id]>$row[departmentName]</option>";
-                            }
-                        }
-
-                        file_put_contents(dirname(__File__) . "../../src/cache/dashboard.txt", serialize($_SESSION["departments"]));
-                    }
-
-                    ?>
-                </select>
-                <?php if ($_SESSION['table'] === 'doctorData') { ?>
-                    <label for='patient'> patient: </label>
-                    <select name='patient' required>
-                        <option value=''></option>
-
-                        <?php
+                                    <?php
 
 
-                        if (file_exists(dirname(__File__) . "../../src/cache/appointments.txt")) {
+                                    if (file_exists(dirname(__File__) . "../../src/cache/dashboard.txt")) {
 
-                            $file = unserialize(file_get_contents(dirname(__File__) . "../../src/cache/appointments.txt"));
+                                        $file = unserialize(file_get_contents(dirname(__File__) . "../../src/cache/dashboard.txt"));
 
-                            for ($i = 0; $i < count($file); $i++) {
+                                        for ($i = 0; $i < count($file); $i++) {
 
-                                echo  "<option value=" . $file[$i]['patient']['id'] . ">" . (string) $file[$i]['patient']['name'] . "</option>";
-                            }
-                        } else {
+                                            echo  "<option value=" . $file[$i]['department']['id'] . ">" . (string) $file[$i]['department']['name'] . "</option>";
+                                        }
+                                    } else {
 
-                            $fetchData = new Db();
+                                        $fetchData = new Db();
 
-                            $patientData = $fetchData->createConnection()->query("SELECT * FROM patientData", PDO::FETCH_ASSOC);
+                                        $data = $fetchData->createConnection()->query("SELECT * FROM departments", PDO::FETCH_ASSOC);
 
-                            $_SESSION["patients"] = array();
+                                        $_SESSION["departments"] = array();
 
-                            if ($patientData->rowCount() > 0) {
+                                        if ($data->rowCount() > 0) {
 
-                                $i = 0;
+                                            $i = 0;
 
-                                foreach ($patientData as $row) {
+                                            foreach ($data as $row) {
 
-                                    if (in_array($row['fullName'], $_SESSION['patients']) == false) {
+                                                if (in_array($row['departmentName'], $_SESSION['departments']) == false) {
 
-                                        $_SESSION["patients"][$i] = [
-                                            "patient" => [
-                                                'id' => $row['Id'],
-                                                'name' => $row['fullName']
-                                            ]
-                                        ];
+                                                    $_SESSION["departments"][$i] = [
+                                                        "department" => [
+                                                            'id' => $row['id'],
+                                                            'name' => $row['departmentName']
+                                                        ]
+                                                    ];
 
-                                        $i++;
+                                                    $i++;
+                                                }
+
+                                                echo  "<option value=$row[id]>$row[departmentName]</option>";
+                                            }
+                                        }
+
+                                        file_put_contents(dirname(__File__) . "../../src/cache/dashboard.txt", serialize($_SESSION["departments"]));
                                     }
 
-                                    echo  "<option value=$row[Id]>$row[fullName]</option>";
-                                }
+                                    ?>
+                                </select>
+                            </div>
+                            <?php if ($_SESSION['table'] === 'doctorData') { ?>
+                                <div class="form_element">
+                                    <label for='patient'> patient: </label>
+                                    <select name='patient' required>
+                                        <option value=''></option>
+
+                                        <?php
+
+
+                                        if (file_exists(dirname(__File__) . "../../src/cache/appointments.txt")) {
+
+                                            $file = unserialize(file_get_contents(dirname(__File__) . "../../src/cache/appointments.txt"));
+
+                                            for ($i = 0; $i < count($file); $i++) {
+
+                                                echo  "<option value=" . $file[$i]['patient']['id'] . ">" . (string) $file[$i]['patient']['name'] . "</option>";
+                                            }
+                                        } else {
+
+                                            $fetchData = new Db();
+
+                                            $patientData = $fetchData->createConnection()->query("SELECT * FROM patientData", PDO::FETCH_ASSOC);
+
+                                            $_SESSION["patients"] = array();
+
+                                            if ($patientData->rowCount() > 0) {
+
+                                                $i = 0;
+
+                                                foreach ($patientData as $row) {
+
+                                                    if (in_array($row['fullName'], $_SESSION['patients']) == false) {
+
+                                                        $_SESSION["patients"][$i] = [
+                                                            "patient" => [
+                                                                'id' => $row['Id'],
+                                                                'name' => $row['fullName']
+                                                            ]
+                                                        ];
+
+                                                        $i++;
+                                                    }
+
+                                                    echo  "<option value=$row[Id]>$row[fullName]</option>";
+                                                }
+                                            }
+
+                                            file_put_contents(dirname(__File__) . "../../src/cache/appointments.txt", serialize($_SESSION["patients"]));
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            <?php
                             }
+                            ?>
+                            <div class="form_element">
+                                <label for='inputDate'> choose date: </label>
+                                <input type='date' name='inputDate' required />
+                            </div>
 
-                            file_put_contents(dirname(__File__) . "../../src/cache/appointments.txt", serialize($_SESSION["patients"]));
-                        }
-                        ?>
-                    </select>
-                <?php
-                }
-                ?>
+                            <div class="form_element">
+                                <label for='inputHour'> choose time: </label>
+                                <div class="form_element_time">
+                                    <input type='number' name='inputHour' min='8' max='13' step='1' placeholder='H' required />
+                                    <span>:</span>
+                                    <input type='number' name='inputMinute' min='00' max='59' step='15' placeholder='M' required />
+                                </div>
+                            </div>
 
-                <label for='inputDate'> choose date: </label>
-                <input type='date' name='inputDate' required />
+                            <div class="form_button_wrapper">
+                                <button type='submit' name='addAppointBtn' class='addAppointBtn'>Add</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                <label for='inputHour'> choose time: </label>
-                <input type='number' name='inputHour' min='8' max='13' step='1' placeholder='H' required />
-                <span>:</span>
-                <input type='number' name='inputMinute' min='00' max='59' step='15' placeholder='M' required />
-
-                <button type='submit' name='addAppointBtn' class='addAppointBtn'>Add</button>
-
-            </form>
-
-        <?php
+    <?php
     } else {
         echo "<h1>Sign in to view this page!</h1>";
     }
-        ?>
+    ?>
 
-        <?php include_once("./includes/footer.php") ?>
+    <?php include_once("./includes/footer.php") ?>
 </body>
 
 </html>

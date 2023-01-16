@@ -50,86 +50,97 @@ if (isset($_POST['addDeptBtn'])) {
     <?php include_once("./includes/nav.php") ?>
 
 
-    <h1>Dashboard</h1>
-
-    <div class="dashboard_wrapper">
+    <div>
         <?php
 
         if (isset($_SESSION['fullName'])) {
         ?>
-            <h2><?= $_SESSION['table'] === 'doctorData' ? "Welcome Dr. $_SESSION[fullName]" : "Welcome, $_SESSION[fullName]" ?> </h2>
 
             <?php
+
+            $db = new Db();
 
             if ($_SESSION['table'] === 'doctorData') {
 
             ?>
                 <?php
 
-                $user = new Db();
 
-                $checkDepartment = $user->createConnection()->query("SELECT * FROM doctorData where id=$_SESSION[id] AND department_Id < 1", PDO::FETCH_ASSOC);
+                $checkDepartment = $db->createConnection()->query("SELECT * FROM doctorData where id=$_SESSION[id] AND department_Id < 1", PDO::FETCH_ASSOC);
 
 
                 if ($checkDepartment->rowCount() > 0) {
 
                 ?>
+                    <div class="section_wrapper">
+                        <div class="form_wrapper">
 
-                    <form method='post'>
+                            <div class="form_img_wrapper">
+                                <img src="./images/department_image.jpg" alt="department_image" />
+                            </div>
 
-                        <label for='department'> Choose your department: </label>
-                        <select name='department' required>
-                            <option value=''></option>
+                            <div class="form_selection_wrapper">
+                                <form method='post'>
+                                    <div class="form_element element_department">
+                                        <label for='department'> Choose your department: </label>
+                                        <select name='department' required>
+                                            <option value=''></option>
 
-                            <?php
+                                            <?php
 
 
-                            if (file_exists(dirname(__File__) . "../../src/cache/dashboard.txt")) {
+                                            if (file_exists(dirname(__File__) . "../../src/cache/dashboard.txt")) {
 
-                                $file = unserialize(file_get_contents(dirname(__File__) . "../../src/cache/dashboard.txt"));
+                                                $file = unserialize(file_get_contents(dirname(__File__) . "../../src/cache/dashboard.txt"));
 
-                                for ($i = 0; $i < count($file); $i++) {
+                                                for ($i = 0; $i < count($file); $i++) {
 
-                                    echo  "<option value=" . $file[$i]['department']['id'] . ">" . (string) $file[$i]['department']['name'] . "</option>";
-                                }
-                            } else {
+                                                    echo  "<option value=" . $file[$i]['department']['id'] . ">" . (string) $file[$i]['department']['name'] . "</option>";
+                                                }
+                                            } else {
 
-                                $fetchData = new Db();
 
-                                $data = $fetchData->createConnection()->query("SELECT * FROM departments", PDO::FETCH_ASSOC);
 
-                                $_SESSION["departments"] = array();
+                                                $data = $db->createConnection()->query("SELECT * FROM departments", PDO::FETCH_ASSOC);
 
-                                if ($data->rowCount() > 0) {
+                                                $_SESSION["departments"] = array();
 
-                                    $i = 0;
+                                                if ($data->rowCount() > 0) {
 
-                                    foreach ($data as $row) {
+                                                    $i = 0;
 
-                                        if (in_array($row['departmentName'], $_SESSION['departments']) == false) {
+                                                    foreach ($data as $row) {
 
-                                            $_SESSION["departments"][$i] = [
-                                                "department" => [
-                                                    'id' => $row['id'],
-                                                    'name' => $row['departmentName']
-                                                ]
-                                            ];
+                                                        if (in_array($row['departmentName'], $_SESSION['departments']) == false) {
 
-                                            $i++;
-                                        }
+                                                            $_SESSION["departments"][$i] = [
+                                                                "department" => [
+                                                                    'id' => $row['id'],
+                                                                    'name' => $row['departmentName']
+                                                                ]
+                                                            ];
 
-                                        echo  "<option value=$row[id]>$row[departmentName]</option>";
-                                    }
-                                }
+                                                            $i++;
+                                                        }
 
-                                file_put_contents(dirname(__File__) . "../../src/cache/dashboard.txt", serialize($_SESSION["departments"]));
-                            }
-                            ?>
-                        </select>
+                                                        echo  "<option value=$row[id]>$row[departmentName]</option>";
+                                                    }
+                                                }
 
-                        <button type='submit' name='addDeptBtn' class='addDeptBtn'>Add</button>
+                                                file_put_contents(dirname(__File__) . "../../src/cache/dashboard.txt", serialize($_SESSION["departments"]));
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
 
-                    </form>
+                                    <div class="form_button_wrapper">
+                                        <button type='submit' name='addDeptBtn' class='addDeptBtn'>Add</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 
                 <?php
                 } else {
@@ -139,9 +150,9 @@ if (isset($_POST['addDeptBtn'])) {
                         <div class="patients_app_wrapper">
                             <div class="patients_number_wrapper">
                                 <?php
-                                $fetchAppointments = new Db();
 
-                                $data = $fetchAppointments->createConnection()->query("SELECT * FROM appointments WHERE DATE(appointmentDate) <= DATE(UTC_TIMESTAMP() + INTERVAL 1 WEEK)", PDO::FETCH_ASSOC);
+
+                                $data = $db->createConnection()->query("SELECT * FROM appointments WHERE DATE(appointmentDate) >= DATE(UTC_TIMESTAMP() + INTERVAL 1 WEEK)", PDO::FETCH_ASSOC);
 
                                 if ($data->rowCount() > 0) {
 
@@ -179,7 +190,7 @@ if (isset($_POST['addDeptBtn'])) {
                         <div class="app_table_wrapper">
                             <?php
 
-                            $patientData = $fetchAppointments->createConnection()->query("SELECT * FROM appointments", PDO::FETCH_ASSOC);
+                            $patientData = $db->createConnection()->query("SELECT * FROM appointments", PDO::FETCH_ASSOC);
 
                             if ($patientData->rowCount() > 0) {
 
@@ -237,8 +248,107 @@ if (isset($_POST['addDeptBtn'])) {
                 }
             } else {
 ?>
+<div class="patient_dashboard_wrapper">
+    <div class="prevApp_wrapper">
+        <div class="app_table_wrapper patTable">
+            <p>Your previous appointments</p>
 
-<h3>Have a nice day!</h3>
+            <?php
+
+                $patientData = $db->createConnection()->prepare("SELECT * FROM appointments INNER JOIN departments ON appointments.department_id = departments.id WHERE appointments.patient_id = :id AND Date(appointments.appointmentDate) <= UTC_TIMESTAMP()");
+
+                $patientData->execute([
+                    'id' => $_SESSION['id']
+                ]);
+
+
+
+                if ($patientData->rowCount() > 0) {
+
+            ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>
+                                Appointment date
+                            </td>
+                            <td>
+                                Department
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <?php foreach ($patientData as $row) { ?>
+
+                            <tr class="table_data_row">
+                                <td><?php echo $row['appointmentDate']; ?>
+                                </td>
+                                <td><?php echo $row['departmentName']; ?>
+                                </td>
+                            </tr>
+
+                        <?php } ?>
+
+                    </tbody>
+                </table>
+            <?php } else { ?>
+                <div class="noApp_wrapper">
+                    <p>No previous appointments!</p>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+    <div class="upcApp_wrapper">
+        <div class="app_table_wrapper patTable">
+            <p>Your upcoming appointments</p>
+
+
+            <?php
+
+                $patientData = $db->createConnection()->prepare("SELECT * FROM appointments INNER JOIN departments ON appointments.department_id = departments.id WHERE appointments.patient_id = :id AND Date(appointments.appointmentDate) >= UTC_TIMESTAMP()");
+
+                $patientData->execute([
+                    'id' => $_SESSION['id']
+                ]);
+
+                if ($patientData->rowCount() > 0) {
+
+            ?>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>
+                                Appointment date
+                            </td>
+                            <td>
+                                Department
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <?php foreach ($patientData as $row) { ?>
+
+                            <tr class="table_data_row">
+                                <td><?php echo $row['appointmentDate']; ?>
+                                </td>
+                                <td><?php echo $row['departmentName']; ?>
+                                </td>
+                            </tr>
+
+                        <?php } ?>
+
+                    </tbody>
+                </table>
+            <?php } else { ?>
+                <div class="noApp_wrapper">
+                    <p>No upcoming appointments!</p>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+</div>
 <?php
             }
         } else {
