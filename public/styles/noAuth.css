@@ -1,0 +1,24 @@
+* {
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+}
+.noAuth_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 70vh;
+}
+.noAuth_wrapper p {
+  font-size: 1.5rem;
+}
+.noAuth_wrapper a {
+  text-decoration: underline;
+}
+@media screen and (min-width: 1280px) {
+  .noAuth_wrapper p {
+    font-size: 2rem;
+  }
+}

@@ -198,7 +198,7 @@ if (isset($_POST['addAppointBtn'])) {
 
     <?php
     } else {
-        echo "<h1>Sign in to view this page!</h1>";
+        echo include_once("./includes/noAuth.php");
     }
     ?>
 

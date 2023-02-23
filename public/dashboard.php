@@ -152,7 +152,7 @@ if (isset($_POST['addDeptBtn'])) {
                                 <?php
 
 
-                                $data = $db->createConnection()->query("SELECT * FROM appointments WHERE DATE(appointmentDate) >= DATE(UTC_TIMESTAMP() + INTERVAL 1 WEEK)", PDO::FETCH_ASSOC);
+                                $data = $db->createConnection()->query("SELECT * FROM appointments WHERE DATE(appointmentDate) >= DATE(UTC_TIMESTAMP()) AND DATE(appointmentDate) <= DATE(UTC_TIMESTAMP() + INTERVAL 1 WEEK)", PDO::FETCH_ASSOC);
 
                                 if ($data->rowCount() > 0) {
 
@@ -190,9 +190,11 @@ if (isset($_POST['addDeptBtn'])) {
                         <div class="app_table_wrapper">
                             <?php
 
-                            $patientData = $db->createConnection()->query("SELECT * FROM appointments", PDO::FETCH_ASSOC);
+                            $patientData = $db->createConnection()->query("SELECT appointments.patient_id, appointments.appointmentDate, departments.departmentName FROM appointments
+                                                                            INNER JOIN departments ON appointments.department_id = departments.id ORDER BY appointments.appointmentDate ", PDO::FETCH_ASSOC);
 
                             if ($patientData->rowCount() > 0) {
+
 
                             ?>
                                 <table>
@@ -211,18 +213,30 @@ if (isset($_POST['addDeptBtn'])) {
                                     </thead>
                                     <tbody>
 
-                                        <?php foreach ($patientData as $row) { ?>
+
+                                        <?php foreach ($patientData as $row) {
+                                            // foreach ($data as $row) {
+                                            //     $data = [];
+
+                                            //     array_push($data, $row);
+                                            //     // print_r($data);
+
+                                            //     array_splice($data, $row);
+                                        ?>
 
                                             <tr class="table_data_row">
                                                 <td><?php echo $row['patient_id']; ?>
                                                 </td>
                                                 <td><?php echo $row['appointmentDate']; ?>
                                                 </td>
-                                                <td><?php echo $row['department_id']; ?>
+                                                <td><?php echo $row['departmentName']; ?>
                                                 </td>
                                             </tr>
 
-                                        <?php } ?>
+                                        <?php
+                                            // }
+                                        }
+                                        ?>
 
                                     </tbody>
                                 </table>
@@ -352,8 +366,10 @@ if (isset($_POST['addDeptBtn'])) {
 <?php
             }
         } else {
-            echo "<h1>Sign in to view this page!</h1>";
+
+            echo include_once("./includes/noAuth.php");
         }
+
 ?>
 </div>
 
