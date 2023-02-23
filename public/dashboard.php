@@ -214,15 +214,7 @@ if (isset($_POST['addDeptBtn'])) {
                                     <tbody>
 
 
-                                        <?php foreach ($patientData as $row) {
-                                            // foreach ($data as $row) {
-                                            //     $data = [];
-
-                                            //     array_push($data, $row);
-                                            //     // print_r($data);
-
-                                            //     array_splice($data, $row);
-                                        ?>
+                                        <?php foreach ($patientData as $row) { ?>
 
                                             <tr class="table_data_row">
                                                 <td><?php echo $row['patient_id']; ?>
@@ -233,10 +225,7 @@ if (isset($_POST['addDeptBtn'])) {
                                                 </td>
                                             </tr>
 
-                                        <?php
-                                            // }
-                                        }
-                                        ?>
+                                        <?php } ?>
 
                                     </tbody>
                                 </table>
